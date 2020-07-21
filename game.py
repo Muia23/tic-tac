@@ -13,6 +13,10 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+        if event.type == pygame.MOUSEBUTTONDOWN:            
+            if pygame.mouse.get_pressed()[0]:
+                pos =pygame.mouse.get_pos()
+                print(pos)
 
     surface.fill((0,0,0))
 
