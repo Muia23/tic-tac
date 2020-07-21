@@ -16,7 +16,7 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:            
             if pygame.mouse.get_pressed()[0]:
                 pos =pygame.mouse.get_pos()
-                print(pos)
+                print(pos[0] // 200, pos[1] // 200)
 
     surface.fill((0,0,0))
 
