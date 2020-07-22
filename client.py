@@ -11,31 +11,21 @@ def create_thread(target):
     thread.daemon = True
     thread.start()
 
-
 import socket
 
 HOST = '127.0.0.1'
 PORT = 5555
-connection_established = False
-conn , addr = None, None
 
 sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-sock.bind((HOST,PORT))
-sock.listen(1)
-
+sock.connect((HOST, PORT))
 
 def receive_data():
     while True:
-        data = conn.recv(1024).decode()
+        data = sock.recv(2048).decode() #blocking command 
         print(data)
-def waiting_for_connection():
-    global connection_established, conn, addr
-    conn, addr= sock.accept()# blocking command
-    print('client is connected')
-    connection_established = True
-    receive_data()
 
-create_thread(waiting_for_connection)
+create_thread(receive_data)
+
 
 grid = Grid()
 
@@ -47,13 +37,13 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN and connection_established:            
+        if event.type == pygame.MOUSEBUTTONDOWN:            
             if pygame.mouse.get_pressed()[0]:
                 pos = pygame.mouse.get_pos()
-                cellX, cellY = pos[0] // 200, pos[1] // 200
+                cellX, cellY = pos[0] // 200, pos[1] // 200               
                 grid.get_mouse(cellX, cellY, player)
                 send_data = '{}-{}'.format(cellX, cellY).encode()
-                conn.send(send_data)
+                sock.send(send_data)
                 if player == "x":
                     player = "o"                    
                 else:
