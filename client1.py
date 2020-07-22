@@ -2,7 +2,7 @@ import pygame
 from grid import Grid
 
 surface = pygame.display.set_mode((600,600))
-pygame.display.set_caption('Tic-tac-toe')
+pygame.display.set_caption('Tic-tac-toe client 1')
 
 import threading
 
@@ -21,7 +21,7 @@ sock.connect((HOST, PORT))
 
 def receive_data():
     while True:
-        data = sock.recv(2048).decode() #blocking command 
+        data = sock.recv(1024).decode() #blocking command 
         print(data)
 
 create_thread(receive_data)
