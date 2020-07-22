@@ -1,4 +1,8 @@
 import pygame
+import os
+
+letterx = pygame.image.load(os.path.join('res', 'imagex.png'))
+lettero = pygame.image.load(os.path.join('res', 'imageo.png'))
 
 class Grid:
     def __init__(self):
@@ -12,6 +16,13 @@ class Grid:
     def draw(self, surface):
         for line in self.grid_lines:
             pygame.draw.line(surface, (200,200,200), line[0], line[1], 2)
+
+        for y in range(len(self.grid)):
+            for x in range(len(self.grid[y])):
+                if self.get_cell_value(x ,y) == "x":
+                    surface.blit(letterx, (x*200, y*200))
+                elif self.get_cell_value(x, y) == "o":
+                    surface.blit(lettero, (x*200, y*200))
 
     def get_cell_value(self,x,y):
         return self.grid[y][x]
